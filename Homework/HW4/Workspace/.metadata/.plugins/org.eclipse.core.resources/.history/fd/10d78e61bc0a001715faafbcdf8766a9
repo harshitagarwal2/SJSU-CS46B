@@ -1,0 +1,114 @@
+package dna;
+
+//
+// FastqRecord contains the defline, sequence, and quality string
+// from a record in a fastq file.
+//
+
+
+public class FastqRecord implements DNARecord 
+{
+	private String defline;
+	private String sequence;
+	private String quality;
+	//
+	// Add a precondition check: throw FastqException if the 1st char of the defline is 
+	// not '@'. You will have to change the ctor declaration to say that it throws
+	// the exception. The exception should contain a useful informative message.
+	//
+	public FastqRecord(String defline, String sequence, String quality) throws RecordFormatException
+	{
+		if(defline.substring(0, 1)=="@")
+		{
+			this.defline=defline;
+		}
+		else
+		{
+			throw new RecordFormatException("Bad 1st char in defline in fastq record: saw " 
+					+ defline + ", expected @");
+		}
+		
+		this.sequence=sequence;
+		this.quality=quality;
+	}
+	
+	
+	// 
+	// Getter methods for defline and sequence.
+	//
+	public String getDefline()
+	{
+		return defline;
+	}
+	
+	public String getSequence()
+	{
+		return sequence;
+	}
+
+
+	//
+	// An equals() method that checks for deep equality of all 3 instance variables,
+	// first for defline and if delines are equal, checks for sequence
+	// and if sequences are equal, checks for equality between quality.
+	public boolean equals(FastqRecord that)
+	{
+		boolean equalDef = this.defline.equals(that.defline);
+		boolean equalSeq = this.sequence.equals(that.sequence);
+		
+		if(equalDef)
+		{
+			if(equalSeq)
+			{
+				return this.quality.equals(that.quality);
+			}
+			else
+			{
+				return equalSeq;
+			}
+		}
+		return equalDef;
+		
+	}
+	
+	//
+	// Returns the sum of the hashcodes of 
+	// defline, sequence, and quality.
+	//
+	public int hashCode()
+	{
+		return defline.hashCode() + sequence.hashCode() + quality.hashCode();
+	}
+	
+	
+	//
+	// Return true if quality contains at least 3 '!' chars.
+	//
+	public boolean qualityIsHigh()
+	{
+		int markCount = 0;
+		for(int i=0;i<quality.length()-1;i++)
+		{
+			if(quality.substring(i,i+1).equals("!"))
+			{
+				markCount+=1;
+			}
+		}
+		
+		if(markCount>=3)
+		{
+			return true;
+		}
+		return false;
+
+	}
+	
+
+	//
+	// Returns the characteristics of the Fastq file in a readable format
+	//
+	public String toString()
+	{
+		return defline + "/n" + sequence + "/n" + "+" + quality + "/n";
+	}
+}

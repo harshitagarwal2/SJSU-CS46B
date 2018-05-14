@@ -1,0 +1,11 @@
+package weather;
+
+public class CumulusCloud extends Cloud {
+	
+	public CumulusCloud(float top,float bottom){
+		
+		super(top,bottom);
+		
+	}
+
+}

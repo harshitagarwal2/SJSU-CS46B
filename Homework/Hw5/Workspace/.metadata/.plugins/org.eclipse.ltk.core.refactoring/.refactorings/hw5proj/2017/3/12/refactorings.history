@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename package &apos;hw5proj&apos; to &apos;sudoku&apos;&#x0D;&#x0A;- Original project: &apos;hw5proj&apos;&#x0D;&#x0A;- Original element: &apos;hw5proj/src/hw5proj&apos;&#x0D;&#x0A;- Renamed element: &apos;hw5proj/src/sudoku&apos;&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename package &apos;hw5proj&apos;" flags="589830" hierarchical="false" id="org.eclipse.jdt.ui.rename.package" input="/src&lt;hw5proj" name="sudoku" qualified="false" references="false" stamp="1490229003640" textual="false" version="1.0"/>
+</session>

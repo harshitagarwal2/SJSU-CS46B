@@ -1,0 +1,67 @@
+package dotlab;
+
+import java.util.Arrays;
+
+public class Dot 
+{
+	private static String[] 	LEGAL_COLOR_NAMES =
+	{
+		"RED", "YELLOW", "BLUE", "CYAN", "GREEN", "MAGENTA", "ORANGE", "BLACK"
+	};
+	
+	private String colorName;
+	private int x;
+	private int y;
+	private int radius;
+	
+	
+	public Dot(String color,int X, int Y, int newRadius)
+	{
+		
+		/*for(String a:LEGAL_COLOR_NAMES)
+		{
+			if(a.equals(color))
+			{
+				colorName=color;
+				flag=true;
+			}
+		}*/
+		
+		if(Arrays.asList(LEGAL_COLOR_NAMES).contains(color))
+			colorName=color;
+		else
+			throw new IllegalArgumentException("bad color name");
+		
+		x=X;
+		y=Y;
+		radius=newRadius;
+	}
+	
+	public String getColorName(){
+		return colorName;
+	}
+	
+	public int getX(){
+		return x;
+	}
+	
+	public int getY(){
+		return y;
+	}
+	
+	public int getRadius(){
+		return radius;
+	}
+	
+	public static void main(String[] args)
+	{
+		Dot dot1 = new Dot("RED",1,1,1);
+		System.out.println(dot1.toString());
+	}
+	
+	public String toString(){
+		return ("Color is" + colorName + "at ("+ x + ","+ y + ")" + "of radius"+ radius);
+	}
+
+
+}

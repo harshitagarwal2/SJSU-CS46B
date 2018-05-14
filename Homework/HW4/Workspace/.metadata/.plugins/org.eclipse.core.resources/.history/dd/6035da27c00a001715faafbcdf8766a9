@@ -1,0 +1,89 @@
+package dna;
+
+
+public class FastaRecord implements Comparable<FastaRecord>, DNARecord
+{	
+	private String defline;
+	private String sequence;
+	//
+	// Throws FastqException if the 1st char of the defline is not ">".
+	//
+	public FastaRecord(String defline, String sequence) throws RecordFormatException
+	{
+		if(!(defline.substring(0, 1).equals(">")))
+		{
+			throw new RecordFormatException("Bad 1st char in defline in fasta record: saw " 
+					+ defline.substring(0,1) + ", expected @");
+		}
+		this.defline=defline;
+		this.sequence=sequence;
+	}
+	
+	
+	// Initializes defline and sequence from the input record..
+	public FastaRecord(FastqRecord fastqRec)
+	{
+		String def = fastqRec.getDefline();
+		this.defline = ">" + def.substring(1, def.length());
+		this.sequence = fastqRec.getSequence();
+	}
+	
+	// 
+	// 2 methods that satisfy the interface.
+	//
+
+	public String getDefline()
+	{
+		return defline;
+	}
+	
+	public String getSequence()
+	{
+		return sequence;
+	}
+	
+	//
+	// An equals() method that checks for equality between defline first
+	// and checks for equality between sequcne and return true if both
+	// are deep equal
+	//
+	// Compares defline, then sequence; compatible with equals() 
+	public int compareTo(FastaRecord that)
+	{
+		int defEqual = this.getDefline().compareTo(that.getDefline());
+		int seqEqual = this.getSequence().compareTo(that.getSequence());
+		
+		if (defEqual != 0)
+		{
+			return defEqual;
+		}
+		else
+			return seqEqual;
+		
+	}
+	
+	@Override
+	public boolean equals(Object x)
+	{
+		FastaRecord that = (FastaRecord) x;
+		return (this.compareTo(that) == 0);
+	}
+	
+	//
+	// A toString () method. 
+	//
+	
+	public String toString()
+	{
+		return defline + "/n" + sequence + "/n";
+	}
+	
+	//
+	// A hashCode() method that returns the sum of the hashcodes of 
+	// defline and sequence.
+	//
+	public int hashCode()
+	{
+		return defline.hashCode() + sequence.hashCode();
+	}
+}

@@ -1,0 +1,34 @@
+CS 46B Lab Report
+Darpan Goyal
+I was the scribe, Sidharth Khanna was the driver.
+
+
+Step 8
+
+Yes, I understand what plagiarism is and
+I promise not to do it.
+
+Eclipse marks bad code at the left side of the source code, 
+the line numbers. When we move cursor to the bad code mark,
+It gives us a message.
+
+
+Step 9
+
+It's better to divide the sum of masses by applying .length
+because the source code is not always accesible and it's a
+good practice to write code that can be used regardless of
+the size of the array. Also, dividing by 8 would be hard coding
+the method, which is bad.
+
+
+Step 10
+
+The score reduced substantially.
+
+Step 12
+
+yes
+
+
+

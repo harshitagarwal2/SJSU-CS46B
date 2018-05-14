@@ -1,0 +1,11 @@
+package weather;
+
+public class StratusCloud extends Cloud {
+	
+	public StratusCloud(float top,float bottom){
+		
+		super(top,bottom);
+		
+	}
+
+}

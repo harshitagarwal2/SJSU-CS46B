@@ -1,0 +1,14 @@
+package cast;
+public class Primitives {
+	
+	public static void dumpMaxValues(){
+		System.out.println(Byte.MAX_VALUE);
+		
+	}
+	
+	public static void main(String[] args){
+		dumpMaxValues();
+		
+	}
+
+}

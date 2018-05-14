@@ -1,0 +1,34 @@
+package movies;
+import java.util.ArrayList;
+import java.util.TreeSet;
+
+public class ListFilmArchive extends ArrayList<Movie> implements FilmArchive
+{
+	public ArrayList<Movie> getSorted(){
+		TreeSet<Movie> treeSet = new TreeSet<Movie>(this);
+		ArrayList<Movie> movies = new ArrayList<Movie>(treeSet);
+		return movies;
+		
+	}
+	public boolean add(Movie a){
+		Movie[] array = Movie.getTestMovies();
+		for(int i=0;i<array.length;i++)
+		{
+			if (a.equals(array[i])){
+				return false;
+			}
+		}
+		super.add(a);
+		return true;
+	}
+	
+	public static void main(String[] args)
+	{
+		ListFilmArchive archive = new ListFilmArchive();
+		for (Movie m: Movie.getTestMovies())
+			archive.add(m);
+		for (Movie m: archive)
+			System.out .println(m);
+	}
+
+}

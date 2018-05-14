@@ -1,0 +1,268 @@
+package sudoku;
+
+import java.util.*;
+
+
+public class Grid 
+{
+	private int[][]						values;
+	
+
+	//
+	// DON'T CHANGE THIS.
+	//
+	// See TestGridSupplier for examples of input.
+	// Dots in input strings represent 0s in values[][].
+	//
+	public Grid(String[] rows)
+	{
+		values = new int[9][9];
+		for (int j=0; j<9; j++)
+		{
+			String row = rows[j];
+			char[] charray = row.toCharArray();
+			for (int i=0; i<9; i++)
+			{
+				char ch = charray[i];
+				if (ch != '.')
+					values[j][i] = ch - '0';
+			}
+		}
+	}
+	
+	
+	//
+	// DON'T CHANGE THIS.
+	//
+	public String toString()
+	{
+		String s = "";
+		for (int j=0; j<9; j++)
+		{
+			for (int i=0; i<9; i++)
+			{
+				int n = values[j][i];
+				if (n == 0)
+					s += '.';
+				else
+					s += (char)('0' + n);
+			}
+			s += "\n";
+		}
+		return s;
+	}
+	
+	
+	//
+	// COMPLETE THIS
+	//
+	//
+	// Finds an empty member of values[][]. Returns an array list of 9 grids that look like the current grid,
+	// except the empty member contains 1, 2, 3 .... 9. Returns null if the current grid is full.
+	//
+	// Example: if this grid = 1........
+	//                         .........
+	//                         .........
+	//                         .........
+	//                         .........
+	//                         .........
+	//                         .........
+	//                         .........
+	//                         .........
+	//
+	// Then the returned array list would contain:
+	//
+	// 11.......          12.......          13.......          14.......    and so on     19.......
+	// .........          .........          .........          .........                  .........
+	// .........          .........          .........          .........                  .........
+	// .........          .........          .........          .........                  .........
+	// .........          .........          .........          .........                  .........
+	// .........          .........          .........          .........                  .........
+	// .........          .........          .........          .........                  .........
+	// .........          .........          .........          .........                  .........
+	// .........          .........          .........          .........                  .........
+	//
+	public ArrayList<Grid> next9Grids()
+	{
+		ArrayList<Grid> nextNine = new ArrayList<>();
+		int[][] intArray=values;
+		if(this.isFull())
+		{
+			return null;
+		}
+		else
+		{
+			int row=0;
+			int column=0;
+			for(int i=0;i<9;i++)
+			{
+				for(int j=0;j<9;j++)
+				{
+					if(values[i][j]==0)
+					{
+						row=i;
+						column=j;
+						break;
+					}
+				}
+			}
+			for(int o=1;o<10;o++)
+			{
+				intArray[row][column]=o;
+				String[] sArray = new String[9];
+				for(int l=0;l<9;l++)
+				{
+					String s = "";
+					for(int m=0;m<9;m++)
+					{
+						s+=intArray[l][m];
+					}
+					sArray[l]=s;
+				}
+				Grid newGrid = new Grid(sArray);
+				nextNine.add(newGrid);
+				
+			}
+		}
+		return nextNine;
+	}
+	
+	//
+	// COMPLETE THIS
+	//
+	// Returns true if this grid is legal. A grid is legal if no row, column, or 
+	// 3x3 block contains a repeated 1, 2, 3, 4, 5, 6, 7, 8, or 9.
+	//
+	public boolean isLegal()
+	{	
+		HashSet<Integer> rowCheck = new HashSet<>();
+		HashSet<Integer> columnCheck = new HashSet<>();
+		HashSet<Integer> first = new HashSet<>();
+		HashSet<Integer> second = new HashSet<>();
+		HashSet<Integer> third = new HashSet<>();
+		for(int i=0;i<9;i++)
+		{
+			for(int j=0;j<9;j++)
+			{
+				if(values[i][j]!=0)
+				{
+					/*if(!rowCheck.add(values[i][j]))
+					{
+						return false;
+					}
+					if(!columnCheck.add(values[j][i]))
+					{
+						return false;
+					}*/
+					
+					if(j<3)
+					{
+						if(!first.add(values[i][j]))
+						{
+							return false;
+						}
+						
+					}
+					else if(j<6)
+					{
+						if(!second.add(values[i][j]))
+						{
+							return false;
+						}
+					}
+					else
+					{
+						if(!third.add(values[i][j]))
+						{
+							return false;
+						}
+					}
+				}
+			}
+			if(i==2 || i==5 || i==8)
+			{
+				first.clear();
+				second.clear();
+				third.clear();
+			}	
+		}
+		return true;
+	}
+	
+	//
+	// COMPLETE THIS
+	//
+	// Returns true if every cell member of values[][] is a digit from 1-9.
+	//
+	public boolean isFull()
+	{
+		for(int i=0;i<9;i++)
+		{
+			for(int j=0;j<9;j++)
+			{
+				if(!(values[i][j]>0 && values[i][j]<10))
+					System.out.println("lol");
+					return false;
+			}
+		}
+		return true;
+
+	}
+	
+	//
+	// COMPLETE THIS
+	//
+	// Returns true if x is a Grid and, for every (i,j), 
+	// x.values[i][j] == this.values[i][j].
+	//
+	public boolean equals(Object x)
+	{
+		Grid gridd = (Grid)x;
+		for(int i=0;i<9;i++)
+		{
+			for(int j=0;j<9;j++)
+			{
+				if(gridd.values[i][j]!=this.values[i][j])
+				{
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	public static void main(String args[])
+	{
+		System.out.println("START");
+		Grid g = TestGridSupplier.getReject1();
+		Grid g1 = TestGridSupplier.getReject2(); 
+		Grid g2 = TestGridSupplier.getReject3(); 
+		Grid g3 = TestGridSupplier.getReject4(); 
+		Solver solver = new Solver(g);
+		Solver solver1 = new Solver(g1);
+		Solver solver2 = new Solver(g2);
+		Solver solver3 = new Solver(g3);
+		//to check next9Grids
+		System.out.println("isLegal: " + g.isLegal());
+		solver.solve();
+		System.out.println(solver.getSolutions());
+		System.out.println("isLegal: " + g1.isLegal());
+		solver1.solve();
+		System.out.println(solver1.getSolutions());
+		System.out.println("isLegal: " + g2.isLegal());
+		solver2.solve();
+		System.out.println(solver2.getSolutions());
+		System.out.println("isLegal: " + g3.isLegal());
+		solver3.solve();
+		System.out.println(solver3.getSolutions());
+		System.out.println("Solved");
+		
+		Grid p = TestGridSupplier.getPuzzle1();		// or any other puzzle
+		Solver solver4 = new Solver(p);
+		System.out.println("isLegal: " + p.isLegal());
+		solver4.solve();
+		
+		// Print out your solution, or test if it equals() the solution in TestGridSupplier.
+	}
+
+}

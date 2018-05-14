@@ -1,0 +1,86 @@
+package bubble;
+
+public class BubbleSorter 
+{
+	private int[]		a;
+	private long		nVisits;
+	private long		nSwaps;
+	
+	
+	public BubbleSorter(int[] a)
+	{
+		this.a = a; 
+	}
+	
+	
+	public void sort()
+	{
+		for (int i=0;i<a.length;i++)/* control the outer loop */
+		{
+			for (int j=a.length-1;j>0;j-- /* control the outer loop */)
+			{
+				nVisits+=2;           // Increment number of visits by 2.
+				
+				if (a[j]<a[j-1])      /* if 2 elements you're visiting need to be swapped */
+				{
+					int temp=a[j-1];
+					a[j-1]=a[j];       // Swap the elements and increment nSwaps.
+					a[j]=temp;
+					nSwaps+=1;
+				}
+			}
+		}
+	}
+	
+	
+	public String toString()
+	{
+		String s = nVisits + " visits, " + nSwaps + " swaps\n{";
+		for (int n: a)
+			s += " " + n;
+		s += " }";
+		return s;
+	}
+	
+	
+	public boolean isSorted()
+	{
+		/* Implement this */
+		if(nVisits>0)
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	
+	public long getNVisits()
+	{
+		/* Implement this */
+		return nVisits;
+	}
+	
+	
+	public long getNSwaps()
+	{
+		/* Implement this */
+		return nSwaps;
+	}
+	
+	
+	public int[] getArray()
+	{
+		return a;
+	}
+	
+	
+	public static void main(String[] args)
+	{
+		int[] a = BubbleSortTestCaseMaker.buildRandom(100,1000);
+		
+		BubbleSorter sorter = new BubbleSorter(a);
+		sorter.sort();
+		System.out.println(sorter);
+		System.out.println(sorter.isSorted()  ?  "SORTED"  :  "NOT SORTED");
+	}
+}
